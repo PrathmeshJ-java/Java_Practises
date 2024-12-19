@@ -1,0 +1,23 @@
+package com.ContactManagerProject.Config;
+
+import java.security.Key;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+@Configuration
+public class JwtConfig {
+	
+	@Bean
+	public Key key() {
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    }
+
+    public long getExpirationTime() {
+        return 86400000; 
+    }
+
+}

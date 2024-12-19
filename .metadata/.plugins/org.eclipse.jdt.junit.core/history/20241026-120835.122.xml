@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AppTest (Failed Tests first)" project="tdd" tests="5" started="5" failures="0" errors="1" ignored="0">
+  <testsuite name="TDDAssessmentSAT26.tdd.AppTest" time="0.054" displayname="AppTest" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]">
+    <testcase name="testTwoDigitwithdifferentdiliminators" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.039" displayname="testTwoDigitwithdifferentdiliminators()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitwithdifferentdiliminators()]">
+      <error>java.lang.NumberFormatException: For input string: "5;"&#13;
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)&#13;
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)&#13;
+	at java.base/java.lang.Integer.parseInt(Integer.java:786)&#13;
+	at TDDAssessmentSAT26.tdd.App.Add(App.java:28)&#13;
+	at TDDAssessmentSAT26.tdd.AppTest.testTwoDigitwithdifferentdiliminators(AppTest.java:46)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testStringOne" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.007" displayname="testStringOne()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testStringOne()]"/>
+    <testcase name="testEmptyString" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.002" displayname="testEmptyString()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testEmptyString()]"/>
+    <testcase name="testTwoDigitNewLine" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.001" displayname="testTwoDigitNewLine()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitNewLine()]"/>
+    <testcase name="testTwoDigitNumbers" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.001" displayname="testTwoDigitNumbers()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitNumbers()]"/>
+  </testsuite>
+</testrun>

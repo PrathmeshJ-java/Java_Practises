@@ -1,0 +1,7 @@
+package Collectionandstreams;
+
+public  interface Calculator {
+	
+	void sum(int a);
+
+}

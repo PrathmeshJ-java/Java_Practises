@@ -1,0 +1,267 @@
+package com.example.bluemigoTest.Helpers;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.example.bluemigoTest.Models.Grade_Details;
+import com.example.bluemigoTest.Models.Orders;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
+
+public class CSVReaderUtil {
+	
+	public static List<Orders> readCSV(String filePath1, String filePath2) throws IOException, CsvException {
+		List<Orders> orders = new ArrayList<>();
+		 Map<String, Grade_Details> gradeDetailsMap = readGradeDetails(filePath2);
+		 LocalDate refDate = LocalDate.parse(GlobalConstants.REF_DATE, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		 
+		 Map<String, Set<String>> compatibleGrades = GradeCompatibilityUtil.loadCompatibleGradesFromFile(GlobalConstants.GRADEMIX_FILEPATH);
+	     Map<String, String> gradeToGroupMap = generateL1Groups(compatibleGrades);
+	        
+        try (CSVReader reader = new CSVReader(new FileReader(filePath1))) {
+            String[] values;
+            reader.readNext(); // Skip header row
+            while ((values = reader.readNext()) != null) {
+            	
+                Orders order = new Orders();
+                order.setOrder_No(values[0]);
+                order.setOrder_Width(values[1]);
+                order.setGrade(values[2]);
+                order.setDelivery_Date(values[4]);
+                order.setBTR_Qty(values[5]);
+                order.setProduct(values[5]);
+                
+                Grade_Details gradeDetails = gradeDetailsMap.get(order.getGrade());
+                
+                order.setGrade_Group(gradeDetails.getGrade_Grp());
+                order.setVD_TYPE(gradeDetails.getvD_TYPE());
+                order.setGRADE_TYPE(gradeDetails.getGRADE_TYPE());
+                order.setRolling_MILL(gradeDetails.getRolling_MILL());
+                order.setScrafing_Group(gradeDetails.getScrafting_Group());
+                
+                try {
+                    double btrQty = Double.parseDouble(values[4]);
+                    double btcQty = btrQty * 1.1;
+                    order.setBTC_Qty(String.valueOf(btcQty));
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid number format for BTR_Qty in order: " + Arrays.toString(values));
+                    order.setBTC_Qty("0.0"); 
+                }
+                
+                calculateBucket(order, GlobalConstants.Bucket_Days, refDate);
+                
+                order.setL1_Group(GradeCompatibilityUtil.getL1Group(order.getGrade(), gradeToGroupMap));
+               
+                generateLevel2GroupsAndSetWidth(orders);
+                
+                orders.add(order);
+                
+                generateLevel3Groups(orders);
+                
+                generateLevel4Groups(orders);
+                
+                
+            }
+        }
+        return orders;
+    }
+	
+	 private static Map<String, Grade_Details> readGradeDetails(String filePath) throws IOException, CsvException {
+	        Map<String, Grade_Details> gradeDetailsMap = new HashMap<>();
+	        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+	            String[] values;
+	            reader.readNext(); 
+	            while ((values = reader.readNext()) != null) {
+	            	Grade_Details gradeDetails = new Grade_Details();
+	                gradeDetails.setGrade(values[0]);
+	                gradeDetails.setGrade_Grp(values[1]);
+	                gradeDetails.setGrade_Grp1(values[2]);
+	                gradeDetails.setvD_TYPE(values[3]);
+	                gradeDetails.setGRADE_TYPE(values[4]);
+	                gradeDetails.setRolling_MILL(values[5]);
+	                gradeDetails.setScrafting_Group(values[6]);
+	                gradeDetailsMap.put(gradeDetails.getGrade(), gradeDetails);
+	            }
+	        }
+	        return gradeDetailsMap;
+	    }
+	 
+	 private static void calculateBucket(Orders order, int bucketDays, LocalDate refDate) {
+	        String deliveryDateStr = order.getDelivery_Date();
+	        try {
+	            LocalDate deliveryDate = LocalDate.parse(deliveryDateStr, GlobalConstants.DATE_FORMATTER);
+	            int daysDiff = (int) java.time.temporal.ChronoUnit.DAYS.between(refDate, deliveryDate);
+	            int bucket = daysDiff / bucketDays;
+	            order.setBucket(String.valueOf(bucket));
+	        } catch (DateTimeParseException e) {
+	            System.err.println("Invalid date format for Delivery_Date: " + deliveryDateStr);
+	            order.setBucket("Unknown");
+	        }
+	    }
+	 
+	 private static Map<String, String> generateL1Groups(Map<String, Set<String>> compatibleGrades) {
+	        Map<String, String> gradeToGroupMap = new HashMap<>();
+	        int groupCounter = 1;
+	        for (String grade : compatibleGrades.keySet()) {
+	            String group = "L1G" + groupCounter;
+	            for (String compatibleGrade : compatibleGrades.get(grade)) {
+	                if (!gradeToGroupMap.containsKey(compatibleGrade)) {
+	                    gradeToGroupMap.put(compatibleGrade, group);
+	                }
+	            }
+	            groupCounter++;
+	        }
+	        return gradeToGroupMap;
+	 }
+	 
+	 
+	 private static void generateLevel2GroupsAndSetWidth(List<Orders> orders) {
+	        // Group orders by L1_Group
+	        Map<String, List<Orders>> ordersByL1Group = orders.stream()
+	                .collect(Collectors.groupingBy(Orders::getL1_Group));
+
+	        int l2GroupCounter = 1;
+
+	        for (Map.Entry<String, List<Orders>> entry : ordersByL1Group.entrySet()) {
+	            List<Orders> l1GroupOrders = entry.getValue();
+	            l1GroupOrders.sort(Comparator.comparing(Orders::getOrder_Width).reversed());
+
+	            String currentL2Group = "L2G" + l2GroupCounter;
+	            int previousWidth = 0;
+
+	            for (Orders order : l1GroupOrders) {
+	                int orderWidth = Integer.parseInt(order.getOrder_Width());
+	                int setWidth = (int) Math.ceil(orderWidth / 25.0) * 25;
+
+	                if (previousWidth != 0 && (previousWidth - setWidth > 45 || orderWidth - previousWidth > 50)) {
+	                    l2GroupCounter++;
+	                    currentL2Group = "L2G" + l2GroupCounter;
+	                }
+
+	                order.setL2_Group(currentL2Group);
+	                order.setSet_Width(String.valueOf(setWidth));
+	                previousWidth = setWidth;
+	            }
+	        }
+	  }
+	 
+	 
+	 private static void generateLevel3Groups(List<Orders> orders) {
+	        // Group orders by L2_Group
+	        Map<String, List<Orders>> ordersByL2Group = orders.stream()
+	                .collect(Collectors.groupingBy(Orders::getL2_Group));
+
+	        int l3GroupCounter = 1;
+
+	        for (Map.Entry<String, List<Orders>> entry : ordersByL2Group.entrySet()) {
+	            List<Orders> l2GroupOrders = entry.getValue();
+	            l2GroupOrders.sort(Comparator.comparing(Orders::getSet_Width));
+
+	            String currentL3Group = "L3G" + l3GroupCounter;
+	            int minWidth = Integer.MAX_VALUE;
+	            int maxWidth = Integer.MIN_VALUE;
+
+	            for (Orders order : l2GroupOrders) {
+	                int setWidth = Integer.parseInt(order.getSet_Width());
+	                minWidth = Math.min(minWidth, setWidth);
+	                maxWidth = Math.max(maxWidth, setWidth);
+
+	                if (maxWidth - minWidth > 75) {
+	                    l3GroupCounter++;
+	                    currentL3Group = "L3G" + l3GroupCounter;
+	                    minWidth = setWidth;
+	                    maxWidth = setWidth;
+	                }
+
+	                order.setL3_Group(currentL3Group);
+	            }
+	        }
+	  }
+	 
+	 private static void generateLevel4Groups(List<Orders> orders) {
+	        // Group orders by Grade_Group
+	        Map<String, List<Orders>> ordersByGradeGroup = orders.stream()
+	                .collect(Collectors.groupingBy(Orders::getGrade));
+
+	        int l4GroupCounter = 1;
+
+	        for (Map.Entry<String, List<Orders>> entry : ordersByGradeGroup.entrySet()) {
+	            List<Orders> gradeGroupOrders = entry.getValue();
+	            gradeGroupOrders.sort(Comparator.comparing(Orders::getSet_Width).reversed());
+
+	            String currentL4Group = "L4G" + l4GroupCounter;
+	            int previousWidth = 0;
+
+	            for (Orders order : gradeGroupOrders) {
+	                int setWidth = Integer.parseInt(order.getSet_Width());
+
+	                if (previousWidth != 0 && Math.abs(previousWidth - setWidth) > 25) {
+	                    l4GroupCounter++;
+	                    currentL4Group = "L4G" + l4GroupCounter;
+	                }
+
+	                order.setL4_Group(currentL4Group);
+	                previousWidth = setWidth;
+	            }
+	        }
+	  }
+	 
+	 public static void generateOutput(String outputFile) throws IOException, CsvException {
+		    // Initialize the output data list
+		    List<String[]> outputData = new ArrayList<>();
+
+		    // Add header to output data
+		    outputData.add(new String[]{"Order_No", "Order_Width", "Set_Width", "Grade", "Delivery_Date", "BTR_Qty", "Product", "L1_Group", "L2_Group", "L3_Group", "L4_Group", "BTC_Qty", "Bucket", "Grade_Group", "VD_TYPE", "GRADE_TYPE", "Rolling_MILL", "Scrafing_Group"});
+
+		    // Read data from CSV
+		    List<Orders> orderData = readCSV(GlobalConstants.ORDERDETAILS_FILEPATH, GlobalConstants.GRADEDETAILS_FILEPATH);
+
+		    // Convert orderData to String[] format and add to outputData
+		    for (Orders order : orderData) {
+		        String[] orderArray = new String[]{
+		            order.getOrder_No(),	            
+		            order.getOrder_Width(),
+		            order.getSet_Width(),
+		            order.getGrade(),
+		            order.getDelivery_Date(),
+		            order.getBTR_Qty(),
+		            order.getProduct(),
+		            order.getL1_Group(),
+		            order.getL2_Group(),
+		            order.getL3_Group(),
+		            order.getL4_Group(),
+		            order.getBTC_Qty(),
+		            order.getBucket(),
+		            order.getGrade_Group(),
+		            order.getVD_TYPE(),
+		            order.getGRADE_TYPE(),
+		            order.getRolling_MILL(),
+		            order.getScrafing_Group()
+		        };
+		        outputData.add(orderArray);
+		    }
+
+		    // Write data to CSV file
+		    try (CSVWriter writer = new CSVWriter(new FileWriter(outputFile))) {
+		        writer.writeAll(outputData);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+ }
+
+

@@ -1,0 +1,5 @@
+package com.psj.BlogApplicationrestapis.Entities;
+
+public class Post {
+
+}

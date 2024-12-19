@@ -1,0 +1,5 @@
+package com.psj.BlogApplicationrestapis.config;
+
+public class JwtAuthenticationFilter {
+
+}

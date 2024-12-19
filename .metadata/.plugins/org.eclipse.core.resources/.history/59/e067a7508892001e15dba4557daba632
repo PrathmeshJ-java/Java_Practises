@@ -1,0 +1,27 @@
+package Collectionandstreams;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class EmployeeStream {
+
+    public static void main(String args[]) {
+
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(new Employee(1, "Prathamesh", 45000));
+        employeeList.add(new Employee(2, "pratik", 50000));
+        employeeList.add(new Employee(3, "Piyush", 12000));
+        employeeList.add(new Employee(4, "Aditya", 24000));
+        employeeList.add(new Employee(5, "Nishank", 21000));
+
+        List<Employee> filterEmployees = employeeList.stream()
+                .filter((e) -> e.getSalary() < 25000)
+                .map((e) -> new Employee(e.getId(), e.getName(), e.getSalary() / 100 * 25))
+                .collect(Collectors.toList());
+
+        for (Employee employee : filterEmployees) {
+            System.out.println(employee);
+        }
+    }
+}

@@ -1,0 +1,5 @@
+package com.psj.BlogApplicationrestapis.controllers;
+
+public class CategoryController {
+
+}

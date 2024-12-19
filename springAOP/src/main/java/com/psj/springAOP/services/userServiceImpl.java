@@ -1,0 +1,19 @@
+package com.psj.springAOP.services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class userServiceImpl implements userService{
+
+	@Override
+	public String userInfo(int id) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "User id :"+id;
+	}
+
+}

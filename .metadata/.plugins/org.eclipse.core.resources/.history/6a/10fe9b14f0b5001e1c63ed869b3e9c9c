@@ -1,0 +1,32 @@
+package com.psj.BlogApplicationrestapis.config;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.psj.BlogApplicationrestapis.Entities.User;
+import com.psj.BlogApplicationrestapis.exceptions.ResourceNotFoundException;
+import com.psj.BlogApplicationrestapis.repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
+
+
+@Service
+@Transactional
+public class UserDetailsServiceImpl implements UserDetailsService{
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	private java.lang.String inputFilePath;
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = this.userRepo.findByEmail(username)
+				.orElseThrow(() -> new ResourceNotFoundException("User ", " email : " + username, 0));
+		return UserDetailsImpl.build(user);
+	}
+}

@@ -1,0 +1,9 @@
+package Reflection;
+
+public class oneClass {
+	
+	private void showMessage(){
+		System.out.println("i am from one class");
+	}
+
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AppTest" project="tdd" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="TDDAssessmentSAT26.tdd.AppTest" time="0.001" displayname="AppTest" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]">
+    <testcase name="testApp" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.001" displayname="testApp()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testApp()]"/>
+  </testsuite>
+</testrun>

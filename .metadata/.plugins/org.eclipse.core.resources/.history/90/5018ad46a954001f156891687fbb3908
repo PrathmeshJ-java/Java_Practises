@@ -1,0 +1,57 @@
+package Collectionandstreams;
+
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import java.util.stream.Collectors;
+
+
+
+public class streamWithMap {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Integer> hsmp = new HashMap<>();
+		
+		hsmp.put("Prathamesh", 25000);
+		hsmp.put("Pratik", 40000);
+		hsmp.put("Nishank", 37000);
+		hsmp.put("Gaurav", 52000);
+		hsmp.put("Rupesh", 32000);
+		hsmp.put("Nilesh", 42000);
+		hsmp.put("Umesh", 30000);
+		
+		Map<String, Integer> outputMap = hsmp.entrySet().stream().sorted(Map.Entry.comparingByKey()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e2, e1) -> e1, LinkedHashMap :: new));
+        System.out.println(outputMap);
+        
+        List<Map.Entry<String, Integer>> mapList = new ArrayList<>(hsmp.entrySet());
+        
+        mapList.sort((e1, e2)-> e2.getValue().compareTo(e1.getValue()));
+        
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        
+        for(Map.Entry<String, Integer> entry: mapList) {
+        	sortedMap.put(entry.getKey(), entry.getValue());        
+	    }
+        
+        System.out.println(sortedMap);
+        
+        String str = "Hello World";
+        
+        Map<Character, Integer> freqMap = str.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), Collectors.collectingAndThen(
+                Collectors.counting(),
+                Long::intValue
+            )));
+        
+        System.out.println(freqMap);
+        
+        
+  }
+}

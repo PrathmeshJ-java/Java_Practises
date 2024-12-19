@@ -1,0 +1,26 @@
+package Reflection;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		try {
+			Class obj = Class.forName("Reflection.oneClass");
+			Object o = obj.getDeclaredConstructor().newInstance();
+			Method m = obj.getDeclaredMethod("showMessage", null);
+			m.setAccessible(true);
+            m.invoke(o, null);
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+	}
+
+}

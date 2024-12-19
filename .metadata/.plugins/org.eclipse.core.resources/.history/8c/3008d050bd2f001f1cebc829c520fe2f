@@ -1,0 +1,11 @@
+package multithreading;
+
+public class ThreadsUsingThreadsClass extends Thread{
+	
+	public void run() {
+		System.out.println("Starting Threads -"+Thread.currentThread().getName());
+		
+		System.out.println("Existing Threads -"+Thread.currentThread().getName());
+	}
+
+}

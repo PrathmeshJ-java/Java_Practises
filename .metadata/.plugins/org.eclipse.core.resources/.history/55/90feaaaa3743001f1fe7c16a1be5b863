@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class Streamstest {
+
+	public static void main(String[] args) {
+		
+		
+String str = "Hello world";
+        
+        
+        char[] charArray = str.toCharArray();
+        
+       
+        HashMap<Character, Long> freq = IntStream.range(0, charArray.length)
+            .mapToObj(i -> charArray[i])             
+            .collect(Collectors.groupingBy(          
+                c -> c,                              
+                HashMap::new,                        
+                Collectors.counting()                
+            ));
+        
+        System.out.println(freq);
+
+	}
+
+}

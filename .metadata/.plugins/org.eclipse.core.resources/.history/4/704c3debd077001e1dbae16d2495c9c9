@@ -1,0 +1,59 @@
+package com.UserManagementPortal.Entities;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "useraddresses")
+public class UserAddresses {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "AddressID")
+	private int addressId;
+	
+	@Column(name = "fullAddress")
+	private String fullAddress;
+	
+	@ManyToOne
+    @JoinColumn(name = "UserID")
+	private UserMaster userMaster;
+
+	public UserAddresses() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
+	}
+
+	public String getFullAddress() {
+		return fullAddress;
+	}
+
+	public void setFullAddress(String fullAddress) {
+		this.fullAddress = fullAddress;
+	}
+
+	public UserMaster getUserMaster() {
+		return userMaster;
+	}
+
+	public void setUserMaster(UserMaster userMaster) {
+		this.userMaster = userMaster;
+	}
+	
+	
+
+}

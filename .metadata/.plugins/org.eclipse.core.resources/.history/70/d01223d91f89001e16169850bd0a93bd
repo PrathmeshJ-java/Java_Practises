@@ -1,0 +1,74 @@
+package com.psj.BlogApplicationrestapis.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import com.psj.BlogApplicationrestapis.exceptions.*;.
+
+import com.psj.BlogApplicationrestapis.Entities.User;
+import com.psj.BlogApplicationrestapis.payloads.UserDto;
+import com.psj.BlogApplicationrestapis.repositories.UserRepository;
+import com.psj.BlogApplicationrestapis.services.UserService;
+
+public class UserServiceImp implements UserService {
+	
+	@Autowired
+	private UserRepository userRepo;
+
+	@Override
+	public UserDto createUser(UserDto userdto) {
+		User user= this.dtoToUser(userdto);
+		User saveUser = this.userRepo.save(user);
+		return this.userToDto(saveUser);
+	}
+
+	@Override
+	public UserDto updateUser(UserDto userdto, int userId) {
+		Optional<User> existingUser = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id ", userId));)
+		User user = existingUser.get();
+		
+		return null;
+	}
+
+	@Override
+	public UserDto getUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UserDto> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUser(int userId) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	private User dtoToUser(UserDto userDto) {
+		User user=new User();
+		user.setUser_id(userDto.getUser_id());
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		user.setAbout(userDto.getAbout());
+		return user;	
+	}
+	
+	
+	public UserDto userToDto(User user) {
+		UserDto userDto = new UserDto();
+		userDto.setUser_id(user.getUser_id());
+		userDto.setName(user.getName());
+		userDto.setEmail(user.getEmail());
+		userDto.setPassword(user.getPassword());
+		userDto.setAbout(user.getAbout());
+		return userDto;
+	}
+	
+}

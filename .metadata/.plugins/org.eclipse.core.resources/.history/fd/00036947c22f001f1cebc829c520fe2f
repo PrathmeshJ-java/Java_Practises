@@ -1,0 +1,19 @@
+package multithreading;
+
+public class ThreadTestClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Starting Main Threads -"+Thread.currentThread().getName()+" - "+Thread.currentThread().getPriority());
+        
+		Thread t = new ThreadsUsingThreadsClass();
+		t.start();
+		
+		
+		System.out.println("Existing Main Threads -"+Thread.currentThread().getName()+" - "+Thread.currentThread().getPriority());
+		
+		
+	}
+
+}

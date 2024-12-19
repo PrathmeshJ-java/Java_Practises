@@ -1,0 +1,30 @@
+package FileOperations;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+
+public class CountingPrograms {
+
+    public static void main(String[] args) {
+        // Define the path to the file
+         
+        int lineCount = 0;
+
+        // Use try-with-resources to ensure the BufferedReader is closed properly
+        try (BufferedReader reader = new BufferedReader(new FileReader(Path.of("./src/input.txt").toFile()))) {
+            String line;
+            // Read each line and increment the counter
+            while ((line = reader.readLine()) != null) {
+                lineCount++;
+            }
+        } catch (IOException e) {
+            // Handle the exception
+            e.printStackTrace();
+        }
+
+        // Output the line count
+        System.out.println("Number of lines in the file: " + lineCount);
+    }
+}

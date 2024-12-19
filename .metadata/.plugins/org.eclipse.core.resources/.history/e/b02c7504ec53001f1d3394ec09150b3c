@@ -1,0 +1,30 @@
+package Collectionandstreams;
+
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+
+
+public class streamWithMap {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Integer> hsmp = new HashMap<>();
+		
+		hsmp.put("Prathamesh", 25000);
+		hsmp.put("Pratik", 40000);
+		hsmp.put("Nishank", 37000);
+		hsmp.put("Gaurav", 52000);
+		hsmp.put("Rupesh", 32000);
+		hsmp.put("Nilesh", 42000);
+		hsmp.put("Umesh", 30000);
+		
+		Map<String, Integer> outputMap = hsmp.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap :: new));
+        System.out.println(outputMap);
+	}
+
+}

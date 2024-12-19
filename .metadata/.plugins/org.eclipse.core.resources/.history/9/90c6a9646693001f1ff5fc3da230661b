@@ -1,0 +1,54 @@
+package TDDAssessmentSAT26.tdd;
+
+/**
+ * Hello world!
+ */
+public final class App {
+	
+	public App() {
+		// TODO Auto-generated constructor stub
+	}
+    public Integer Add(String numbers) {
+    	int sum = 0;
+    	if(numbers.isEmpty()) {
+    		return sum;
+    	}else if(numbers.equals("1")) {
+    		return 1;
+    	}else {
+    		String deliminator = "[,\\n]";
+    		if (numbers.startsWith("//")) {
+    	        int delimiterEndIndex = numbers.indexOf('\n');
+    	        if (delimiterEndIndex != -1) {
+    	            deliminator = "[" + numbers.substring(2, delimiterEndIndex) + "]";
+    	            numbers = numbers.substring(delimiterEndIndex + 1); 
+    	        }
+    	    }
+    		String[] intNumber = numbers.split(deliminator);
+    		StringBuilder negativeNumber = new StringBuilder();
+    		for(String num: intNumber) {
+    			int n = Integer.parseInt(num);
+    			if(n< 0) {
+    				negativeNumber.append(n).append(" ");
+    			}
+    			sum += n;    		
+    		}
+    	}
+    	
+    	if(negativeNumber.size() > 0) {
+    		
+    	}
+    	
+    	
+		return sum;
+    }
+
+    /**
+     * Says hello to the world.
+     * @param args The arguments of the program.
+     */
+    public static void main(String[] args) {
+        App app = new App();
+       
+        System.out.println( app.Add("2,2,2,4,76"));
+    }
+}

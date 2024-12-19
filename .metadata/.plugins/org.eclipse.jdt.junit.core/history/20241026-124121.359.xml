@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AppTest" project="tdd" tests="6" started="6" failures="1" errors="2" ignored="0">
+  <testsuite name="TDDAssessmentSAT26.tdd.AppTest" time="0.064" displayname="AppTest" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]">
+    <testcase name="testTwoDigitwithNegativeNumbers" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.047" displayname="testTwoDigitwithNegativeNumbers()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitwithNegativeNumbers()]">
+      <failure>
+        <expected>Negative numbers not allowed: -5</expected>
+        <actual>For input string: "1
+-5"</actual>
+        org.opentest4j.AssertionFailedError: expected: &lt;Negative numbers not allowed: -5&gt; but was: &lt;For input string: "1
+-5"&gt;&#13;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)&#13;
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)&#13;
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)&#13;
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)&#13;
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)&#13;
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)&#13;
+	at TDDAssessmentSAT26.tdd.AppTest.testTwoDigitwithNegativeNumbers(AppTest.java:55)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+
+      </failure>
+    </testcase>
+    <testcase name="testStringOne" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.001" displayname="testStringOne()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testStringOne()]"/>
+    <testcase name="testEmptyString" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.001" displayname="testEmptyString()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testEmptyString()]"/>
+    <testcase name="testTwoDigitNewLine" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.004" displayname="testTwoDigitNewLine()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitNewLine()]">
+      <error>java.lang.NumberFormatException: For input string: "1
+5"&#13;
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)&#13;
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)&#13;
+	at java.base/java.lang.Integer.parseInt(Integer.java:786)&#13;
+	at TDDAssessmentSAT26.tdd.App.Add(App.java:30)&#13;
+	at TDDAssessmentSAT26.tdd.AppTest.testTwoDigitNewLine(AppTest.java:42)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testTwoDigitNumbers" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.002" displayname="testTwoDigitNumbers()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitNumbers()]"/>
+    <testcase name="testTwoDigitwithdifferentdiliminators" classname="TDDAssessmentSAT26.tdd.AppTest" time="0.003" displayname="testTwoDigitwithdifferentdiliminators()" uniqueid="[engine:junit-jupiter]/[class:TDDAssessmentSAT26.tdd.AppTest]/[method:testTwoDigitwithdifferentdiliminators()]">
+      <error>java.lang.NumberFormatException: For input string: "//;"&#13;
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)&#13;
+	at java.base/java.lang.Integer.parseInt(Integer.java:654)&#13;
+	at java.base/java.lang.Integer.parseInt(Integer.java:786)&#13;
+	at TDDAssessmentSAT26.tdd.App.Add(App.java:30)&#13;
+	at TDDAssessmentSAT26.tdd.AppTest.testTwoDigitwithdifferentdiliminators(AppTest.java:47)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

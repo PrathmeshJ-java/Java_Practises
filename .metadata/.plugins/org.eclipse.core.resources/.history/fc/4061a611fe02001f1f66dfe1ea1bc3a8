@@ -1,0 +1,18 @@
+package LinkedList;
+
+public class linkedListOperation {
+
+	public static void main(String[] args) {
+		LinkedList linkedList = new LinkedList();
+		linkedList.addfirst(1);
+		linkedList.addfirst(2);
+		linkedList.addfirst(3);
+		linkedList.addfirst(4);
+		linkedList.addLast(6);
+		linkedList.printlist();
+		
+		}
+	
+}
+
+

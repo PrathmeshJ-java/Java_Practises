@@ -1,0 +1,12 @@
+package com.example.bluemigoTest.Helpers;
+
+public class GlobalConstants {
+	
+	public static final String REF_DATE = "15/07/2024";
+	public static final int Bucket_Days = 3;
+	public static final String ORDERDETAILS_FILEPATH = "E:\\\\Prathmesh\\\\GromigoAssessment\\\\Order_Details.csv";
+	public static final String GRADEDETAILS_FILEPATH = "E:\\\\Prathmesh\\\\GromigoAssessment\\\\Grade_Details.csv";
+	public static final String GRADEMIX_FILEPATH = "E:\\\\Prathmesh\\\\GromigoAssessment\\\\Grade_Mix.csv";
+	public static final String OUTPUT_FILEPATH = "E:\\\\Prathmesh\\\\GromigoAssessment\\\\output.csv";
+	public static final String DATE_FORMATTER = "dd-MM-yyyy";
+}

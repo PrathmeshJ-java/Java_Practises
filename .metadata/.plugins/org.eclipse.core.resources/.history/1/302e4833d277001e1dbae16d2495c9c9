@@ -1,0 +1,100 @@
+package com.UserManagementPortal.Entities;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+
+
+@Entity
+@Table(name = "usermaster")
+public class UserMaster {
+	public List<UserAddresses> getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(List<UserAddresses> userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int UserID;
+	
+	private String User_Name;
+	private String User_Password;
+	private long User_PhoneNumber;
+	private Date dateOfRegistration;
+	private String status;
+	
+	@OneToMany(mappedBy = "UserAddresses", targetEntity = UserAddresses.class)
+	private List<UserAddresses> userAddress;
+	
+	
+
+	public UserMaster() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getUserID() {
+		return UserID;
+	}
+
+	public void setUserID(int userID) {
+		UserID = userID;
+	}
+
+	public String getUser_Name() {
+		return User_Name;
+	}
+
+	public void setUser_Name(String user_Name) {
+		User_Name = user_Name;
+	}
+
+	public String getUser_Password() {
+		return User_Password;
+	}
+
+	public void setUser_Password(String user_Password) {
+		User_Password = user_Password;
+	}
+
+	public long getUser_PhoneNumber() {
+		return User_PhoneNumber;
+	}
+
+	public void setUser_PhoneNumber(long user_PhoneNumber) {
+		User_PhoneNumber = user_PhoneNumber;
+	}
+
+	public Date getDateOfRegistration() {
+		return dateOfRegistration;
+	}
+
+	public void setDateOfRegistration(Date dateOfRegistration) {
+		this.dateOfRegistration = dateOfRegistration;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
+	
+	
+
+}

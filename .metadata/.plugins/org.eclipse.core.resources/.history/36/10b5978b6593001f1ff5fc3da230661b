@@ -1,0 +1,52 @@
+package TDDAssessmentSAT26.tdd;
+
+/**
+ * Hello world!
+ */
+public final class App {
+	
+	public App() {
+		// TODO Auto-generated constructor stub
+	}
+    public Integer Add(String numbers) {
+    	int sum = 0;
+
+        if (numbers.isEmpty()) {
+            return sum; // Return 0 for empty input
+        }
+
+        String deliminator = "[,\\n]"; // Default delimiters
+
+        // Check for custom delimiter
+        if (numbers.startsWith("//")) {
+            int delimiterEndIndex = numbers.indexOf('\n');
+            if (delimiterEndIndex != -1) {
+                deliminator = "[" + numbers.substring(2, delimiterEndIndex) + "]"; // Get custom delimiter
+                numbers = numbers.substring(delimiterEndIndex + 1); // Remove delimiter line
+            }
+        }
+
+        // Split the numbers using the determined delimiters
+        String[] intNumber = numbers.split(deliminator);
+
+        for (String num : intNumber) {
+            if (!num.isEmpty()) { // Ignore empty entries
+                int n = Integer.parseInt(num); // Parse and sum
+                sum += n;    		
+            }
+        }
+        
+        return sum;
+
+    }
+
+    /**
+     * Says hello to the world.
+     * @param args The arguments of the program.
+     */
+    public static void main(String[] args) {
+        App app = new App();
+       
+        System.out.println( app.Add("2,2,2,4,76"));
+    }
+}

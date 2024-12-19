@@ -1,0 +1,37 @@
+package abstractionInterfaces;
+
+
+abstract class A{
+	
+	abstract void print();
+	
+	void checkEngine() {
+		System.out.println("i have a engine");
+	}
+}
+
+class B extends A{
+	
+	@Override
+	void print() {
+		
+		System.out.println("i am class B");
+		
+	}
+	
+	
+}
+
+public class AbstractionExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		A obj = new B();
+		
+		obj.checkEngine();
+		obj.print();
+
+	}
+
+}

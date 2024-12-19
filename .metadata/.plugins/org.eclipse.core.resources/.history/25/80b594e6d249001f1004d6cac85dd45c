@@ -1,0 +1,36 @@
+package com.example.bluemigoTest.Helpers;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.bluemigoTest.Models.Orders;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
+
+public class CSVReaderUtil {
+	
+	public static List<Orders> readCSV(String filePath) throws IOException, CsvException {
+		List<Orders> orders = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+            String[] values;
+            reader.readNext(); // Skip header row
+            while ((values = reader.readNext()) != null) {
+                Orders order = new Orders();
+                order.setOrder_No(values[0]);
+                order.setOrder_Width(values[1]);
+                order.setGrade(values[2]);
+                order.setDelivery_Date(values[4]);
+                order.setBTR_Qty(values[5]);
+                order.setProduct(values[5]);
+                orders.add(order);
+            }
+        }
+        return orders;
+        }
+ }
+
+

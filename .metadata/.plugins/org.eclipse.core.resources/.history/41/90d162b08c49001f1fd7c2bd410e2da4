@@ -1,0 +1,58 @@
+package com.example.bluemigoTest.Helpers;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
+
+public class orderProcessor {
+	
+	private List<String[]> orderData;
+    private List<String[]> gradeData;
+    private List<String[]> compatibleGradeData;
+    
+    public orderProcessor(String gradeFile, String compatibleGradeFile, String orderFile) throws IOException, CsvException {
+        this.orderData = CSVReaderUtil.readCSV(orderFile);
+        this.gradeData = CSVReaderUtil.readCSV(gradeFile);
+        this.compatibleGradeData = CSVReaderUtil.readCSV(compatibleGradeFile);
+    }
+    
+    public void processOrders() {
+        // Implement the logic to process the orders
+        // Calculate BTC_Qty
+        for (String[] order : orderData) {
+        	try {
+                double btrQty = Double.parseDouble(order[4]);
+                double btcQty = btrQty * 1.1;
+                order[4] = String.valueOf(btcQty);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid number format for BTR_Qty in order: " + Arrays.toString(order));
+                order[4] = "0.0"; // Assign a default value or handle appropriately
+            }
+        }
+        // Assign orders to buckets
+        // Generate Level-1, Level-2, Level-3, Level-4 groups
+    }
+    
+    public void generateOutput(String outputFile) {
+    	List<String[]> outputData = new ArrayList<>();
+       
+        outputData.add(new String[]{"Order_No", "Order_Width", "Set_Width", "Grade", "Delivery_Date", "BTR_Qty", "Product", "L1_Group", "L2_Group", "L3_Group", "L4_Group", "BTC_Qty", "Bucket", "Grade_Group", "VD_TYPE", "GRADE_TYPE", "Rolling_MILL", "Scrafing_Group"});
+
+        
+        for (String[] order : orderData) {
+            outputData.add(order);
+        }
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(outputFile))) {
+            writer.writeAll(outputData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}

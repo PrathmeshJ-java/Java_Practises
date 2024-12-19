@@ -1,0 +1,14 @@
+package com.example.bluemigoTest.Helpers;
+
+import java.time.format.DateTimeFormatter;
+
+public class GlobalConstants {
+	
+	public static final String REF_DATE = "15/07/2024";
+	public static final int Bucket_Days = 3;
+	public static final String ORDERDETAILS_FILEPATH = "E:\\Prathmesh\\GromigoAssessment\\abc.csv";
+	public static final String GRADEDETAILS_FILEPATH = "E:\\Prathmesh\\GromigoAssessment\\Grade_Details.csv";
+	public static final String GRADEMIX_FILEPATH = "E:\\Prathmesh\\GromigoAssessment\\Grade_Mix.csv";
+	public static final String OUTPUT_FILEPATH = "E:\\Prathmesh\\GromigoAssessment\\output.csv";
+	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+}

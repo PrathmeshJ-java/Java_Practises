@@ -1,0 +1,63 @@
+package BinaryTree;
+
+import java.io.NotActiveException;
+import java.util.ArrayList;
+import java.util.Queue;
+
+import BinaryTree.Binarytree.Node;
+
+public class BinaryTreeImpl {
+
+	public static void main(String[] args) {
+		
+	  Binarytree tree = new Binarytree();
+	  tree.root = tree.new Node(10);
+	  tree.root.left = tree.new Node(20);
+	  tree.root.right = tree.new Node(30);
+	  tree.root.left.left = tree.new Node(40);
+	  
+	  System.out.println(tree.root.data);
+	  
+	  System.out.println("preOrder");
+	  
+	  preOrder(tree.root);
+	  System.out.println();
+	  
+	  System.out.println("inOrder");
+	  
+	  inOrder(tree.root);
+	  
+      System.out.println();
+	  
+	  System.out.println("postOrder");
+	  
+	  postOrder(tree.root);
+
+	}
+	
+	static void preOrder(Node root) {
+		if(root==null)
+			return;
+		System.out.print(root.data+" ");
+		preOrder(root.left);
+		preOrder(root.right);
+	}
+	
+	static void inOrder(Node root) {
+		if(root==null)
+			return;
+		inOrder(root.left);
+		System.out.print(root.data+" ");
+		inOrder(root.right);
+	}
+	
+	static void postOrder(Node root) {
+		if(root==null)
+			return;
+		postOrder(root.left);
+		postOrder(root.right);
+		System.out.print(root.data+" ");
+	}
+	
+	
+}

@@ -1,0 +1,34 @@
+package com.UserManagementPortal.Entities;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usermaster")
+public class UserMaster {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private Integer UserID;
+
+	private String User_Name;
+	private String User_Password;
+	private long User_PhoneNumber;
+	private Date dateOfRegistration;
+	private String status;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userMaster", cascade = CascadeType.ALL)
+	private List<UserAddresses> userAddress;
+
+}

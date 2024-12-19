@@ -1,0 +1,14 @@
+package BinaryTree;
+
+import BinaryTree.Binarytree.Node;
+
+public class BinaryTreeImpl {
+
+	public static void main(String[] args) {
+	  Binarytree tree = new Binarytree();
+	  tree.root = new Node(10);
+	  tree.root.left = new Node(20);
+
+	}
+
+}

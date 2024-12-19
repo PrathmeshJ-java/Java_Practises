@@ -1,0 +1,20 @@
+package com.satScoreManagement.services;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.satScoreManagement.Entities.Candidate;
+
+import netscape.javascript.JSObject;
+
+
+public interface CandidateService {
+	
+	public Candidate insertCandidate(Candidate candidate);
+	
+	public List<Candidate> getAlldata();
+	
+	public List<JSObject> getCandidateRanks();
+
+}

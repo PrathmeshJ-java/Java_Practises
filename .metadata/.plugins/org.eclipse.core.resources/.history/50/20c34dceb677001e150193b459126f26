@@ -1,0 +1,5 @@
+package com.UserManagementPortal.Config;
+
+public class CustomException {
+
+}

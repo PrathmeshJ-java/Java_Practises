@@ -1,0 +1,28 @@
+package TDDAssessmentSAT26.tdd;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+
+/**
+ * Unit test for simple App.
+ */
+class AppTest {
+    /**
+     * Rigorous Test.
+     */
+	
+	App app;
+	
+	@BeforeEach
+    public void init() {
+        app = new App();
+    }
+	
+    @Test
+    void testEmptyString() {
+        assertEquals(0, app.Add(""));
+    }
+}

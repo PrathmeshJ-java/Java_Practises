@@ -1,0 +1,5 @@
+package com.UserManagementPortal.Service;
+
+public class UserMasterService {
+
+}
